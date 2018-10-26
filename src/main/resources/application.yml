@@ -1,0 +1,52 @@
+server:
+  session-timeout: 1800
+  port: 8886
+
+spring:
+  thymeleaf:
+    mode: LEGACYHTML5
+    cache: false
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  profiles:
+    active: dev     #环境配置
+
+  devtools:
+    restart:
+      enabled: true
+  mail:
+    host: smtp.qq.com
+    username: ykbian@qq.com
+    password: fbalrwyzygeebdhb
+    default-encoding: UTF-8
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mapping/**/*Mapper.xml
+  typeAliasesPackage: com.byk.visit.**.entity
+#开启debug模式，会在控制台输出更多内容，但是不会输出到文件
+debug: false
+logging:
+  level:
+    root: info
+#    com.byk.myboke:
+
+
+#以下是自定义配置文件
+byk:
+  pagePath: http://localhost:8081/file/
+  SMS:
+    appid: 1400101674
+    appkey: 599072c6b8af69616dcf230c96ee603e
+    templateId: 150923

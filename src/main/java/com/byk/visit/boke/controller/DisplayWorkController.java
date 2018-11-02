@@ -2,15 +2,17 @@ package com.byk.visit.boke.controller;
 
 import com.byk.visit.boke.entity.DisplayWorks;
 import com.byk.visit.boke.service.DisplayWorksService;
-import com.byk.visit.commen.util.RestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: bianyakun
@@ -19,7 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/displayWork")
-public class DisplayWorkController {
+public class DisplayWorkController extends BaseController{
 
 
     @Autowired
@@ -29,40 +31,27 @@ public class DisplayWorkController {
     private String pagePath;
 
     @PostMapping("/insert")
-    public RestUtil insertSelective(DisplayWorks displayWorks){
-        RestUtil restUtil = new RestUtil();
-        displayWorks.setPageAddress(pagePath);
+    public Map insertSelective(DisplayWorks displayWorks){
+        displayWorks.setPageAddress(pagePath+displayWorks.getPageAddress());
         int result = displayWorksService.insertSelective(displayWorks);
         if (result < 1){
-            restUtil.setMsg("插入失败");
-            restUtil.setStatus(20002);
-            return  restUtil;
+            return insertFailedResponse();
         }else {
-            restUtil.setMsg("插入成功");
-            restUtil.setStatus(20000);
-            return  restUtil;
+           return insertSuccseeResponse();
         }
     }
 
     @GetMapping("/list")
-    public RestUtil list(){
-        RestUtil restUtil = new RestUtil();
-        List<DisplayWorks> displayWorks = displayWorksService.list();
-        for (DisplayWorks works:displayWorks) {
-            works.setPageAddress(pagePath);
-        }
+    public List<DisplayWorks> list(Model model){
+        List<DisplayWorks> displayWorks = displayWorksService.list(null);
+        System.out.println(" List<DisplayWorks>==="+displayWorks);
         if (displayWorks.isEmpty()){
-            restUtil.setMsg("数据为空");
-            restUtil.setStatus(20002);
-            return  restUtil;
+            return  null;
         }else {
-            restUtil.setMsg("查询成功");
-            restUtil.setStatus(20000);
-            restUtil.setData(displayWorks);
-            for (DisplayWorks works2:displayWorks) {
-                System.out.println(works2);
+            for (DisplayWorks works:displayWorks) {
+                works.setPageAddress(pagePath+works.getPageAddress());
             }
-            return  restUtil;
+            return  displayWorks;
         }
     }
 }

@@ -4,11 +4,11 @@
   <resultMap id="BaseResultMap" type="com.byk.visit.boke.entity.Visiter" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="visiter_ip" property="visiterIp" jdbcType="VARCHAR" />
-    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, visiter_ip, time, del_flag
+    id, visiter_ip, create_time, del_flag
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -24,9 +24,9 @@
     <selectKey keyProperty="id" resultType="string" order="BEFORE">
       select replace(uuid(), '-', '') as id from dual
     </selectKey>
-    insert into boke_visiter (id, visiter_ip, time, 
+    insert into boke_visiter (id, visiter_ip, create_time,
       del_flag)
-    values (#{id,jdbcType=VARCHAR}, #{visiterIp,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=VARCHAR}, #{visiterIp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{delFlag,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.byk.visit.boke.entity.Visiter" >
@@ -41,8 +41,8 @@
       <if test="visiterIp != null" >
         visiter_ip,
       </if>
-      <if test="time != null" >
-        time,
+      <if test="createTime != null" >
+        create_time,
       </if>
       <if test="delFlag != null" >
         del_flag,
@@ -55,8 +55,8 @@
       <if test="visiterIp != null" >
         #{visiterIp,jdbcType=VARCHAR},
       </if>
-      <if test="time != null" >
-        #{time,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="delFlag != null" >
         #{delFlag,jdbcType=INTEGER},
@@ -69,8 +69,8 @@
       <if test="visiterIp != null" >
         visiter_ip = #{visiterIp,jdbcType=VARCHAR},
       </if>
-      <if test="time != null" >
-        time = #{time,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="delFlag != null" >
         del_flag = #{delFlag,jdbcType=INTEGER},
@@ -81,7 +81,7 @@
   <update id="updateByPrimaryKey" parameterType="com.byk.visit.boke.entity.Visiter" >
     update boke_visiter
     set visiter_ip = #{visiterIp,jdbcType=VARCHAR},
-      time = #{time,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       del_flag = #{delFlag,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>

@@ -27,12 +27,32 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
-  <select id="list" resultMap="BaseResultMap"  >
-    select   *
-    from boke_display_works
-    where del_flag = '0'
+  <select id="list" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from boke_display_works
+    <where>
+      <if test="id != null and id != ''"> and id = #{id} </if>
+      <if test="pageName != null and pageName != ''"> and page_name = #{pageName} </if>
+      <if test="pageAddress != null and pageAddress != ''"> and page_address = #{pageAddress} </if>
+      <if test="pageLink != null and pageLink != ''"> and page_link = #{pageLink} </if>
+      <if test="pageClass != null and pageClass != ''"> and page_class = #{pageClass} </if>
+      <if test="targetLink != null and targetLink != ''"> and target_link = #{targetLink} </if>
+      <if test="createUser != null and createUser != ''"> and create_user = #{createUser} </if>
+      <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+      <if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+      <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+      <if test="deleteUser != null and deleteUser != ''"> and delete_user = #{deleteUser} </if>
+      <if test="deleteTime != null and deleteTime != ''"> and delete_time = #{deleteTime} </if>
+      <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+    </where>
+    <choose>
+      <otherwise>
+        order by create_time ASC
+      </otherwise>
+    </choose>
+    <if test="offset != null and limit != null">
+      limit #{offset}, #{limit}
+    </if>
   </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from boke_display_works
     where id = #{id,jdbcType=VARCHAR}

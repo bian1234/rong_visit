@@ -4,6 +4,7 @@ import com.byk.visit.boke.entity.DisplayWorks;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface DisplayWorksService {
@@ -15,7 +16,11 @@ public interface DisplayWorksService {
 
     DisplayWorks selectByPrimaryKey(String id);
 
-    List<DisplayWorks> list();
+
+    /**
+     *    展示作品列表
+     */
+    List<DisplayWorks> list(Map<String, Object> map);
 
     int updateByPrimaryKeySelective(DisplayWorks record);
 

@@ -7,7 +7,7 @@ public class Visiter {
 
     private String visiterIp;
 
-    private Date time;
+    private Date createTime;
 
     private Integer delFlag;
 
@@ -16,7 +16,7 @@ public class Visiter {
     }
 
     public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+        this.id = id;
     }
 
     public String getVisiterIp() {
@@ -24,15 +24,15 @@ public class Visiter {
     }
 
     public void setVisiterIp(String visiterIp) {
-        this.visiterIp = visiterIp == null ? null : visiterIp.trim();
+        this.visiterIp = visiterIp;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Integer getDelFlag() {

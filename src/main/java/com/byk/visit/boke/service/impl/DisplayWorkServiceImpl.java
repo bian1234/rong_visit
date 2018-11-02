@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: bianyakun
@@ -32,8 +33,8 @@ public class DisplayWorkServiceImpl  implements DisplayWorksService {
     }
 
     @Override
-    public List<DisplayWorks> list() {
-        return displayWorksMapper.list();
+    public List<DisplayWorks> list(Map<String, Object> map) {
+        return displayWorksMapper.list(map);
     }
 
     @Override

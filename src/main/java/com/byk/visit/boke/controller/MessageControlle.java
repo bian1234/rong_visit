@@ -5,7 +5,6 @@ import com.byk.visit.boke.entity.BokeMessage;
 import com.byk.visit.boke.service.MessageService;
 import com.byk.visit.commen.util.IPUtil;
 import com.byk.visit.commen.util.MailUtil;
-import com.byk.visit.commen.util.RestUtil;
 import com.byk.visit.commen.util.SMSUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @Author: bianyakun
@@ -23,9 +23,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/message")
-public class MessageControlle {
+public class MessageControlle extends BaseController{
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private MessageService messageService;
@@ -39,8 +38,7 @@ public class MessageControlle {
 
 
     @PostMapping("/insert")
-    public RestUtil insert(HttpServletRequest request, BokeMessage bokeMessage) throws Exception{
-        RestUtil restUtil = new RestUtil();
+    public Map insert(HttpServletRequest request, BokeMessage bokeMessage) throws Exception{
         String ip = IPUtil.getIpAddr(request);
         bokeMessage.setUserIp(ip);
         //先发送邮件再操作数据库
@@ -58,15 +56,12 @@ public class MessageControlle {
             bokeMessage.setReply(1);
         }
         if (messageService.insertSelective(bokeMessage) > 0) {
-            restUtil.setMsg("我会尽快回复您的留言");
-            restUtil.setStatus(20000);
             mailUtil.sendEmailToMe(bokeMessage,ip);
             logger.info("Ip为"+ip+"的用户留言了");
+            return insertSuccseeResponse();
+
         } else {
-            restUtil.setMsg("未知错误，请联系中边");
-            restUtil.setStatus(20001);
-            restUtil.setData(bokeMessage);
+           return insertFailedResponse();
         }
-        return restUtil;
     }
 }

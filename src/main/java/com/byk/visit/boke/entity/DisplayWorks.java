@@ -5,6 +5,9 @@ import java.util.Date;
 public class DisplayWorks {
     private String id;
 
+    private String projectName;
+
+
     private String pageName;
 
     private String pageAddress;
@@ -131,6 +134,14 @@ public class DisplayWorks {
 
     public void setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     @Override

@@ -38,10 +38,14 @@ public class HomeContrller {
     private DisplayWorksService displayWorksService;
 
 
-    @RequestMapping("/")
+    @RequestMapping({"/","","index"})
     public String toIndex(HttpServletRequest request,Model model){
 
         List<DisplayWorks> displayWorks = displayWorksService.list(null);
+
+        for (DisplayWorks works:displayWorks) {
+            works.setPageName(works.getPageAddress()+"/"+works.getPageName());
+        }
         if (displayWorks.isEmpty()){
             model.addAttribute("displayWorks",null);
         }else {

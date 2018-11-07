@@ -1,6 +1,6 @@
 server:
   session-timeout: 1800
-  port: 8886
+  port: 1031
 
 spring:
   thymeleaf:

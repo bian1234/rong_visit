@@ -27,29 +27,16 @@ public class DisplayWorkController extends BaseController{
     @Autowired
     private DisplayWorksService displayWorksService;
 
-    @Value("${byk.pagePath}")
-    private String pagePath;
 
-    @PostMapping("/insert")
-    public Map insertSelective(DisplayWorks displayWorks){
-        displayWorks.setPageAddress(pagePath+displayWorks.getPageAddress());
-        int result = displayWorksService.insertSelective(displayWorks);
-        if (result < 1){
-            return insertFailedResponse();
-        }else {
-           return insertSuccseeResponse();
-        }
-    }
 
     @GetMapping("/list")
     public List<DisplayWorks> list(Model model){
         List<DisplayWorks> displayWorks = displayWorksService.list(null);
-        System.out.println(" List<DisplayWorks>==="+displayWorks);
         if (displayWorks.isEmpty()){
             return  null;
         }else {
             for (DisplayWorks works:displayWorks) {
-                works.setPageAddress(pagePath+works.getPageAddress());
+                works.setPageName(works.getPageAddress()+works.getPageName());
             }
             return  displayWorks;
         }
